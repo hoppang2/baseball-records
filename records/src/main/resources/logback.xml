@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+	<if condition='isDefined("wasenv")'>
+		<then>
+			<!-- 런타임이 설정 되어 있는 경우 -->
+			<include resource="logback-${wasenv}.xml" />
+		</then>
+		<else>
+			<!-- 개발계 -->
+			<include resource="logback-loc.xml" />
+		</else>
+	</if>
+</configuration>

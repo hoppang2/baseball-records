@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %logger[%line] - %msg %n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="table" class="ch.qos.logback.core.ConsoleAppender">
+<!-- 		<withJansi>true</withJansi> -->
+		<encoder>
+			<pattern>%boldBlue(%msg) %n</pattern>
+		</encoder>
+	</appender>
+	<appender name="query" class="ch.qos.logback.core.ConsoleAppender">
+<!-- 		<withJansi>true</withJansi> -->
+		<encoder>
+			<pattern>===========================================================%n%green(%msg) %n===========================================================%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="jdbc" level="error">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+
+	<logger name="jdbc.sqlonly" level="info" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="jdbc.resultsettable" level="info" additivity="false">
+		<appender-ref ref="table" />
+	</logger>
+
+
+	<logger name="jdbc.sqltiming" level="error" additivity="false">
+		<appender-ref ref="query" />
+	</logger>
+
+
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</included>

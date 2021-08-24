@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team">
+
+	<select id="getTeamList" resultType="com.baseball.records.vo.rest.TeamVo">
+		/* team.getTeamList */
+		select
+			*
+		from
+			team
+		order by seq_no
+	</select>
+
+	<select id="getTeamInfo" resultType="com.baseball.records.vo.rest.TeamVo" parameterType="Integer">
+		/* team.getTeamInfo */
+		select
+			*
+		from
+			team
+		where
+			seq_no = #{seqNo}
+	</select>
+
+	<insert id="insertTeamInfo">
+		/* team.insertTeamInfo */
+		insert into
+			team
+			(
+				team_nm,
+				team_nm_sub
+			)
+			values
+			(
+				#{teamNm},
+				#{teamNmSub}
+			)
+	</insert>
+
+	<update id="updateTeamInfo">
+		/* team.updateTeamInfo */
+		update
+			team
+		set
+			team_nm = #{teamNm}
+			, team_nm_sub = #{teamNmSub}
+		where
+			seq_no = #{seqNo}
+	</update>
+
+	<delete id="deleteTeamInfo">
+		/* team.deleteTeamInfo */
+		delete from team where seq_no = #{seqNo}
+	</delete>
+
+</mapper>

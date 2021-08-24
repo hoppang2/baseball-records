@@ -31,6 +31,20 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	/*	//새로 추가 항목	*/
+	implementation 'org.lazyluke:log4jdbc-remix:0.2.7'
+
+	implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.7'
+	implementation "org.apache.commons:commons-lang3"
+	implementation "org.apache.httpcomponents:httpclient"
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+
+	//logback 관련
+    implementation group: 'org.codehaus.janino', name: 'janino', version: '3.1.2'
+    /*	//새로 추가 항목	*/
 }
 
 test {
