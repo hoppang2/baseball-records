@@ -8,5 +8,5 @@ import lombok.Data;
 public class TeamVo {
 	private int seqNo;
 	private String teamNm;
-	private String teamNmSub;
+	private String teamSubNm;
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+
+		<script type="text/javascript" layout:fragment="script" th:inline="javascript">
+			/**
+			 * 선수 정보 상세 보기
+			 */
+			function gotoInfo(teamSeqNo, seqNo){
+				var url = 'info?teamSeqNo=' + teamSeqNo;
+				if(!$.comm.isNull(seqNo) && seqNo > 0){
+					url += '&seqNo=' + seqNo;
+				}
+				location.href = url;
+			}
+		</script>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid" layout:fragment="content">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">[[${teamInfo.teamNm}]]&nbsp;[[${teamInfo.teamSubNm}]]</h1>
+                        <div>
+                        	<a th:href="|javascript:gotoInfo('${teamInfo.seqNo}');|" class="btn btn-secondary btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                                <span class="text">선수 등록</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                    	<div class="col-lg-12">
+                    		<div class="card mb-4">
+								<div class="card-header">
+									투수
+								</div>
+								<div class="card-body">
+
+									<!-- Earnings (Monthly) Card Example -->
+			                        <div class="col-xl-2 col-md-6 mb-4 d-inline-block" th:each="pitcher : ${pitcherList}">
+			                            <div class="card border-left-primary shadow h-100 py-2" th:onclick="javascript:gotoInfo('[[${teamInfo.seqNo}]]', '[[${pitcher.seqNo}]]');">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">[[${pitcher.playerPositionNm}]]</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800">[[${pitcher.playerNm}]]</div>
+			                                        </div>
+			                                        <div class="col-auto">
+			                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+
+								</div>
+                    		</div>
+                    	</div>
+                    </div>
+
+                    <div class="row">
+                    	<div class="col-lg-12">
+                    		<div class="card mb-4">
+								<div class="card-header">
+									타자
+								</div>
+								<div class="card-body">
+
+									<!-- Earnings (Monthly) Card Example -->
+			                        <div class="col-xl-2 col-md-6 mb-4 d-inline-block" th:each="hitter : ${hitterList}">
+			                            <div class="card border-left-primary shadow h-100 py-2" th:onclick="javascript:gotoInfo('[[${teamInfo.seqNo}]]', '[[${hitter.seqNo}]]');">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">[[${hitter.playerPositionNm}]]</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800">[[${hitter.playerNm}]]</div>
+			                                        </div>
+			                                        <div class="col-auto">
+			                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+
+								</div>
+                    		</div>
+                    	</div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+</html>

@@ -1,7 +1,5 @@
 package com.baseball.records.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +13,33 @@ import com.baseball.records.service.TeamService;
 import com.baseball.records.vo.rest.TeamVo;
 
 @RestController
-public class PageController extends _RestDefaultController {
+@RequestMapping(value = "records")
+public class RecordsController extends _RestDefaultController{
 
-	Logger logger = LoggerFactory.getLogger(PageController.class);
+	private final Logger logger = LoggerFactory.getLogger(RecordsController.class);
 
 	@Autowired
 	TeamService teamService;
 
-	@RequestMapping(value = "/main/index")
-    public ModelAndView index() {
+	/**
+	 * 팀별 기록 리스트
+	 * @param teamSeqNo	팀 시퀀스 번호
+	 * @return
+	 */
+	@RequestMapping(value = "list")
+	public ModelAndView list(@RequestParam(value = "teamSeqNo", required = true) int teamSeqNo) {
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("records/list");
 
 		try {
+			TeamVo teamInfo = teamService.getTeamInfo(teamSeqNo);
 
+			mav.addObject("teamInfo", teamInfo);
 		}catch (Exception e) {
 			logger.info("error : {}", e);
+
 		}
 
-    	mav.setViewName("main/index");
-        return mav;
-    }
-
+		return mav;
+	}
 }

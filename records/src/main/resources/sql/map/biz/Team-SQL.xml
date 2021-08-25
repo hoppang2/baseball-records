@@ -27,12 +27,12 @@
 			team
 			(
 				team_nm,
-				team_nm_sub
+				team_sub_nm
 			)
 			values
 			(
 				#{teamNm},
-				#{teamNmSub}
+				#{teamSubNm}
 			)
 	</insert>
 
@@ -42,7 +42,7 @@
 			team
 		set
 			team_nm = #{teamNm}
-			, team_nm_sub = #{teamNmSub}
+			, team_sub_nm = #{teamSubNm}
 		where
 			seq_no = #{seqNo}
 	</update>

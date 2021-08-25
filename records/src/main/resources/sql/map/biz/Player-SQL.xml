@@ -2,17 +2,29 @@
 <!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="player">
 
-	<select id="getPlayerList" resultType="com.baseball.records.vo.rest.TeamVo">
-		/* team.getPlayerList */
+	<select id="getPlayerList" resultType="com.baseball.records.vo.rest.PlayerListVo" parameterType="com.baseball.records.vo.rest.PlayerVo">
+		/* player.getPlayerList */
 		select
-			*
+			P.seq_no
+			, P.team_seq_no
+			, P.player_nm
+			, P.player_position
+			, if(P.player_position = 1, '투수', '타자') as player_position_nm
+			, T.team_nm
+			, T.team_sub_nm
 		from
-			player
-		order by seq_no
+			player P
+		left join team T on (T.seq_no = P.team_seq_no)
+		where
+			P.team_seq_no = #{teamSeqNo}
+			<if test="playerPosition > 0">
+				and P.player_position = #{playerPosition}
+			</if>
+		order by P.seq_no desc
 	</select>
 
-	<select id="getPlayerInfo" resultType="com.baseball.records.vo.rest.TeamVo" parameterType="Integer">
-		/* team.getPlayerInfo */
+	<select id="getPlayerInfo" resultType="com.baseball.records.vo.rest.PlayerVo" parameterType="Integer">
+		/* player.getPlayerInfo */
 		select
 			*
 		from
@@ -22,7 +34,7 @@
 	</select>
 
 	<insert id="insertPlayerInfo">
-		/* team.insertPlayerInfo */
+		/* player.insertPlayerInfo */
 		insert into
 			player
 			(
@@ -39,7 +51,7 @@
 	</insert>
 
 	<update id="updatePlayerInfo">
-		/* team.updatePlayerInfo */
+		/* player.updatePlayerInfo */
 		update
 			player
 		set
@@ -50,7 +62,7 @@
 	</update>
 
 	<delete id="deletePlayerInfo">
-		/* team.deletePlayerInfo */
+		/* player.deletePlayerInfo */
 		delete from player where seq_no = #{seqNo}
 	</delete>
 

@@ -10,13 +10,41 @@ $(function () {
 
 	//snb team list
 	$.comm.getTeamList(function(list){
+//		var _playerHtml = '';
+//		var _recordsHtml = '';
+//		for(var i = 0; i < list.length; i++){
+//			_playerHtml += '<a class="collapse-item" href="/player/list?teamSeqNo=' + list[i].seqNo + '">' + list[i].teamNm + '&nbsp;' + list[i].teamSubNm + '</a>'
+//			_recordsHtml += '<a class="collapse-item" href="/records/list?teamSeqNo=' + list[i].seqNo + '">' + list[i].teamNm + '&nbsp;' + list[i].teamSubNm + '</a>'
+//		}
+//
+//		$(".teamPlayers").append(_playerHtml);
+//		$(".teamRecords").append(_recordsHtml);
+//		$.comm.getSnb();
+
+
 		var _html = '';
 		for(var i = 0; i < list.length; i++){
-			_html += '<a class="collapse-item" href="/team/' + list[i].seqNo + '">' + list[i].teamNm + '&nbsp;' + list[i].teamNmSub + '</a>'
+			_html += '<li class="nav-item collapseTeam' + list[i].seqNo + '">';
+			_html += '	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTeam' + list[i].seqNo + '"';
+			_html += '		aria-expanded="true" aria-controls="collapseTeam' + list[i].seqNo + '">';
+			_html += '		<i class="fas fa-fw fa-user"></i>';
+//			_html += '		<img src="/img/logo/Kia_Tigers_emblem_(2021).jpg" style="width: 17px; height: 13px;">';
+			_html += '		<span>' + list[i].teamNm + '&nbsp;' + list[i].teamSubNm + '</span>';
+			_html += '	</a>';
+			_html += '	<div id="collapseTeam' + list[i].seqNo + '" class="collapse" aria-labelledby="headingTeam' + list[i].seqNo + '" data-parent="#accordionSidebar">';
+			_html += '		<div class="bg-white py-2 collapse-inner rounded team' + list[i].seqNo + '">';
+			_html += '			<h6 class="collapse-header">CUSTOM ' + list[i].teamNm + '&nbsp;' + list[i].teamSubNm + ':</h6>';
+			_html += '			<a class="collapse-item" href="/player/list?teamSeqNo=' + list[i].seqNo + '">Players</a>';
+			_html += '			<a class="collapse-item" href="/records/list?teamSeqNo=' + list[i].seqNo + '">Records</a>';
+			_html += '		</div>';
+			_html += '	</div>';
+			_html += '</li>';
 		}
 
-		$(".teamList").append(_html);
-		$.comm.getSnb();
+        //선택한 요소 앞에 삽입
+        $("#sidebarToggle").parent().before(_html);
+        $.comm.getSnb();
+
 	});
 
 });
