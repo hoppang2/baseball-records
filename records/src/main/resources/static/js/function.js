@@ -26,7 +26,7 @@ $(function () {
 		for(var i = 0; i < list.length; i++){
 			_html += '<li class="nav-item collapseTeam' + list[i].seqNo + '">';
 			_html += '	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTeam' + list[i].seqNo + '"';
-			_html += '		aria-expanded="true" aria-controls="collapseTeam' + list[i].seqNo + '">';
+			_html += '		aria-expanded="false" aria-controls="collapseTeam' + list[i].seqNo + '">';
 			_html += '		<i class="fas fa-fw fa-user"></i>';
 //			_html += '		<img src="/img/logo/Kia_Tigers_emblem_(2021).jpg" style="width: 17px; height: 13px;">';
 			_html += '		<span>' + list[i].teamNm + '&nbsp;' + list[i].teamSubNm + '</span>';

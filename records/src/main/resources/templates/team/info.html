@@ -14,18 +14,16 @@
 			}
 
 			var seqNo = $('#seqNo').val();
-			var teamSeqNo = $('#teamSeqNo').val();
-			var playerNm = $('#playerNm').val();
-			var playerPosition = $.comm.isNull($('#dropdownMenuButton').data('val')) ? 0 : $('#dropdownMenuButton').data('val');
+			var teamNm = $('#teamNm').val();
+			var teamSubNm = $('#teamSubNm').val();
 
 			var param = {
-				'playerNm' : playerNm
-				, 'playerPosition' : playerPosition
-				, 'teamSeqNo' : teamSeqNo
+				'teamNm' : teamNm
+				, 'teamSubNm' : teamSubNm
 				, 'seqNo' : seqNo
 			};
 
-			fn.post('/player/save', param, onSave);
+			fn.post('/team/save', param, onSave);
 		}
 
 		/**
@@ -34,7 +32,7 @@
 		function onSave(obj){
 			if(obj.success){
 				alert('완료되었습니다.');
-				location.href = '/player/list?teamSeqNo=' + obj.payload;
+				location.href = '/team/list';
 			}else{
 				alert('오류가 발생하였습니다.');
 			}
@@ -44,17 +42,18 @@
 		 * 유효성 체크
 		 */
 		function validation(){
-			var playerNm = $('#playerNm').val();
-			var playerPosition = $.comm.isNull($('#dropdownMenuButton').data('val')) ? 0 : $('#dropdownMenuButton').data('val');
+			var teamNm = $('#teamNm').val();
+			var teamSubNm = $('#teamSubNm').val();
 
-			if($.comm.isNull(playerNm)){
-				alert('선수명을 입력해 주세요.');
-				$('#playerNm').focus();
+			if($.comm.isNull(teamNm)){
+				alert('팀명을 입력해 주세요.');
+				$('#teamNm').focus();
 				return false;
 			}
 
-			if(playerPosition == 0){
-				alert('선수 포지션을 선택해 주세요.');
+			if($.comm.isNull(teamSubNm)){
+				alert('Sub 팀명을 입력해 주세요.');
+				$('#teamSubNm').focus();
 				return false;
 			}
 
@@ -62,23 +61,14 @@
 		}
 
 		/**
-		 * 선수 포지션 select box 선택
-		 */
-		function selectPosition(val){
-			var text = (val == 1) ? '투수' : (val == 2) ? '타자' : 'Dropdown';
-			$('#dropdownMenuButton').html(text);
-			$('#dropdownMenuButton').data('val', val);
-		}
-
-		/**
 		 * 삭제
 		 */
-		function playerDelete(seqNo, teamSeqNo){
+		function teamDelete(seqNo){
 			if(confirm('정말 삭제하시겠습니까?')){
-				fn.post('/player/delete/' + seqNo, null, function(obj){
+				fn.post('/team/delete/' + seqNo, null, function(obj){
 					if(obj.success){
 						alert('완료되었습니다.');
-						location.href = '/player/list?teamSeqNo=' + teamSeqNo;
+						location.href = '/team/list';
 					}else{
 						alert('오류가 발생하였습니다.');
 					}
@@ -102,27 +92,19 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">[[${info.seqNo > 0 ? '선수 정보' : '선수 등록'}]]</h1>
+                                        <h1 class="h4 text-gray-900 mb-2">[[${info.seqNo > 0 ? '팀 정보' : '팀 등록'}]]</h1>
                                     </div>
                                     <form class="user">
                                     	<input type="hidden" id="seqNo" name="seqNo" th:value="${info.seqNo}"/>
-                                    	<input type="hidden" id="teamSeqNo" name="teamSeqNo" th:value="${info.teamSeqNo}"/>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="playerNm" aria-describedby="emailHelp"
-                                                placeholder="선수명" th:value="${info.playerNm}">
+                                                id="teamNm" aria-describedby="emailHelp"
+                                                placeholder="팀명" th:value="${info.teamNm}">
                                         </div>
                                         <div class="form-group">
-                                            <div class="dropdown no-arrow mb-4">
-		                                        <button class="btn btn-light dropdown-toggle col-lg-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:attr="data-val=${info.playerPosition}">
-		                                            [[${info.playerPosition == 1 ? '투수' : info.playerPosition == 2 ? '타자' : 'Dropdown'}]]
-		                                        </button>
-		                                        <div class="dropdown-menu animated--fade-in col-lg-12" aria-labelledby="dropdownMenuButton" style="">
-		                                            <a class="dropdown-item" href="javascript:selectPosition(0);">선택 안 함</a>
-		                                            <a class="dropdown-item" href="javascript:selectPosition(1);">투수</a>
-		                                            <a class="dropdown-item" href="javascript:selectPosition(2);">타자</a>
-		                                        </div>
-		                                    </div>
+                                            <input type="text" class="form-control form-control-user"
+                                                id="teamSubNm" aria-describedby="emailHelp"
+                                                placeholder="Sub 팀명" th:value="${info.teamSubNm}">
                                         </div>
                                         <div class="form-group row" th:if="${info.seqNo > 0}">
 		                                    <div class="col-sm-6 mb-3 mb-sm-0">
@@ -134,7 +116,7 @@
 												</a>
 		                                    </div>
 		                                    <div class="col-sm-6">
-												<a th:href="|javascript:playerDelete('${info.seqNo}', '${info.teamSeqNo}');|" class="btn btn-danger btn-user btn-block">
+												<a th:href="|javascript:teamDelete('${info.seqNo}');|" class="btn btn-danger btn-user btn-block">
 			                                        <span class="icon text-white-50">
 			                                            <i class="fas fa-trash"></i>
 			                                        </span>

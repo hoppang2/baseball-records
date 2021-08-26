@@ -47,7 +47,7 @@
 		 */
 		getTeamList : function(callBack) {
 			//snb team list
-			fn.get('/team/list', null, function(obj){
+			fn.get('/team/selectList', null, function(obj){
 				var list = obj.payload;
 				if (typeof (callBack) == 'function') {
 					callBack(list);
@@ -68,16 +68,15 @@
 			//pathname별 처리
 			if(pathname.indexOf('/main/index') > -1){	//Dashboard
 
-			}else if(pathname.indexOf('/player') > -1){	//Team Players
-				idx = 0;
-			}else if(pathname.indexOf('/records') > -1){	//Team Records
-				idx = 1;
 			}else if(pathname.indexOf('/team') > -1){	//Team
+				idx = 0;
+			}else if(pathname.indexOf('/player') > -1){	//Team Players
+				idx = 1;
+			}else if(pathname.indexOf('/records') > -1){	//Team Records
 				idx = 2;
 			}
 
 			console.log(idx);
-			$('#accordionSidebar .nav-item').eq(idx).addClass('active');
 
 			//Dashboard를 제외한 SNB sub navigation active class 추가
 			if(teamSeqNo > 0){
@@ -85,21 +84,19 @@
 				$('.collapseTeam' + teamSeqNo).find('.nav-link').removeClass('collapsed');
 				$('#collapseTeam' + teamSeqNo).addClass('show');
 
-				$('.team' + teamSeqNo).find('a').eq(idx).addClass('active');
+				$('.team' + teamSeqNo).find('a').eq(idx - 1).addClass('active');
+			}else{
+				$('#accordionSidebar .nav-item').eq(idx).addClass('active');
 			}
 
-			//TODO : 토글 처리
-			$.comm.toggle;
-		},
-		/**
-		 * 토글 클릭
-		 */
-		onClickToggle : function(){
-			if($('body').hasClass('sidebar-toggled')){
-				$.comm.toggle = 0;
-			}else{
-				$.comm.toggle = 1;
-			}
+			var selectors = document.querySelectorAll('.nav-item');
+			[].forEach.call(selectors, function(selector){
+				selector.addEventListener('click', function(){
+					$('#accordionSidebar .nav-item').removeClass('active');
+					selector.classList.toggle('active');
+				});
+			});
+
 		}
 
 	});

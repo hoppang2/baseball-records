@@ -17,4 +17,16 @@ public class TeamService extends _DefaultService{
 		return sql.selectOne("team.getTeamInfo", seqNo);
 	}
 
+	public int insertTeamInfo(TeamVo vo) {
+		return sql.insert("team.insertTeamInfo", vo);
+	}
+
+	public int updateTeamInfo(TeamVo vo) {
+		return sql.update("team.updateTeamInfo", vo);
+	}
+
+	public int deleteTeamInfo(int seqNo) {
+		return sql.delete("team.deleteTeamInfo", seqNo);
+	}
+
 }
