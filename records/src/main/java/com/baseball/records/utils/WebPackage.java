@@ -461,6 +461,50 @@ public class WebPackage {
 	}
 
 	/**
+	 * 두날짜간의 차이 구하기
+	 */
+	public static int getBetweenDayCount(Date startDate, Date endDate) {
+		List<Date> rtn = getBetweenDates(startDate, endDate);
+		return rtn.size();
+	}
+
+	/**
+	 * 두날짜 사이에 포함되는 모든 날짜를 반환한다.
+	 */
+	public static List<Date> getBetweenDates(Date startDate, Date endDate) {
+		List<Date> rtn = new ArrayList<>();
+
+		Date date1 = null;
+		String dateStr2 = "";
+		if (startDate.getTime() > endDate.getTime()) {
+			dateStr2 = WebPackage.DateToString(startDate, "yyyyMMdd");
+			date1 = endDate;
+		} else {
+			dateStr2 = WebPackage.DateToString(endDate, "yyyyMMdd");
+			date1 = startDate;
+		}
+		Calendar cal = Calendar.getInstance();
+		String cDateStr = "";
+
+		int i = 0;
+		while (i < 20000) {
+			cDateStr = WebPackage.DateToString(date1, "yyyyMMdd");
+			rtn.add(date1);
+
+			if (cDateStr.equals(dateStr2)) {
+				break;
+			} else {
+				cal.setTime(date1);
+				cal.add(Calendar.DATE, 1);
+				date1 = cal.getTime();
+				i++;
+			}
+		}
+
+		return rtn;
+	}
+
+	/**
 	 * 두자리 패딩
 	 */
 	public static String zero2Pading(int val) {
